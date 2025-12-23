@@ -1,42 +1,12 @@
 import sys
-import json
-import matplotlib.pyplot as plt
+from analyzer import analyze_transactions
+from visualizer import plot_tx_types
 
 if len(sys.argv) < 2:
     print("Usage: python3 src/main.py <path_to_tx_json>")
     sys.exit(1)
 
 TX_FILE = sys.argv[1]
-
-
-def analyze_transactions(file_path):
-    """
-    Analyze XRPL-like transactions in JSON and return a summary.
-    """
-    with open(file_path, "r") as f:
-        transactions = json.load(f)
-
-    summary = {
-        "total_tx": len(transactions),
-        "tx_types": {},
-        "total_payments": 0,
-        "total_fees": 0
-    }
-
-    for tx in transactions:
-        tx_type = tx.get("TransactionType", "Unknown")
-        fee = int(tx.get("Fee", 0))
-        summary["total_fees"] += fee
-
-        # Count transaction types
-        summary["tx_types"][tx_type] = summary["tx_types"].get(tx_type, 0) + 1
-
-        # Sum payment amounts
-        if tx_type == "Payment":
-            amount = int(tx.get("Amount", 0))
-            summary["total_payments"] += amount
-
-    return summary
 
 def print_summary(summary):
     print("XRPL Transaction Summary")
@@ -46,17 +16,6 @@ def print_summary(summary):
     print(f"Total payments: {summary['total_payments']}")
     print(f"Total fees: {summary['total_fees']}")
 
-def plot_tx_types(tx_types):
-    types = list(tx_types.keys())
-    counts = list(tx_types.values())
-
-    plt.rcParams['figure.figsize'] = [4,6]
-    plt.bar(types, counts)
-    plt.xlabel('Transaction Types')
-    plt.ylabel('Counts')
-    plt.title('XRPL Transaction Types Distribution')
-    plt.tight_layout()
-    plt.show()
 
 if __name__ == "__main__":
     result = analyze_transactions(TX_FILE)
