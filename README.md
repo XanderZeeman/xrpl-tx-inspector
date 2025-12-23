@@ -29,6 +29,22 @@ Total fees: 96
 
 ---
 
+.
+
+|src/
+
+├── analyzer.py     # Core transaction analysis logic
+
+├── visualizer.py   # Data visualization (Matplotlib)
+
+└── main.py         # CLI entry point
+
+data/
+
+└── sample_tx.json
+
+---
+
 ## Usage
 
 ```bash
