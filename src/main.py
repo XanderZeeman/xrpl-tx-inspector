@@ -1,7 +1,13 @@
+import sys
 import json
 import matplotlib.pyplot as plt
 
-TX_FILE = 'data/sample_tx.json'
+if len(sys.argv) < 2:
+    print("Usage: python3 src/main.py <path_to_tx_json>")
+    sys.exit(1)
+
+TX_FILE = sys.argv[1]
+
 
 def analyze_transactions(file_path):
     """
@@ -40,9 +46,9 @@ def print_summary(summary):
     print(f"Total payments: {summary['total_payments']}")
     print(f"Total fees: {summary['total_fees']}")
 
-def plot_tx_types(summary):
-    types = list(summary['tx_types'].keys())
-    counts = list(summary['tx_types'].values())
+def plot_tx_types(tx_types):
+    types = list(tx_types.keys())
+    counts = list(tx_types.values())
 
     plt.rcParams['figure.figsize'] = [4,6]
     plt.bar(types, counts)
@@ -55,4 +61,4 @@ def plot_tx_types(summary):
 if __name__ == "__main__":
     result = analyze_transactions(TX_FILE)
     print_summary(result)
-    plot_tx_types(result["tx_types"])
+    plot_tx_types(result['tx_types'])
