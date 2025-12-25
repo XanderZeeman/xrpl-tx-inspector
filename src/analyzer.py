@@ -1,13 +1,14 @@
+# Import necessary library
 import json
 
-
+# Function to analyze XRPL-like transactions in JSON and return a summary
 def analyze_transactions(file_path):
-    """
-    Analyze XRPL-like transactions in JSON and return a summary.
-    """
+    
+    # Load transactions from JSON file
     with open(file_path, "r") as f:
         transactions = json.load(f)
 
+    # Initialize summary dictionary
     summary = {
         "total_tx": len(transactions),
         "tx_types": {},
@@ -15,6 +16,7 @@ def analyze_transactions(file_path):
         "total_fees": 0
     }
 
+    # Analyze each transaction
     for tx in transactions:
         tx_type = tx.get("TransactionType", "Unknown")
         fee = int(tx.get("Fee", 0))

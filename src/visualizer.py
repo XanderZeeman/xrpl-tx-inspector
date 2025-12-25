@@ -1,5 +1,7 @@
+# Import required library
 import matplotlib.pyplot as plt
 
+# Function to plot transaction types
 def plot_tx_types(tx_types):
     types = list(tx_types.keys())
     counts = list(tx_types.values())
